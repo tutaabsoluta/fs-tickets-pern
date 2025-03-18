@@ -1,8 +1,10 @@
-import { Form, Link, useActionData } from "react-router-dom";
+import { ActionFunctionArgs, Form, Link, useActionData } from "react-router-dom";
+import { ErrorMessage } from "../components";
+import { addTicket } from "../services";
 
 // action procesa los datos del formulario
 // Habilitamos en el router la propiedad action, decimos que funcion se ejecutara cuando se haga submit
-export async function action({ request }) {
+export async function action({ request }: ActionFunctionArgs) {
 
     const data = Object.fromEntries(await request.formData() );
 
@@ -16,13 +18,14 @@ export async function action({ request }) {
         return error
     }
 
+    addTicket( data );
+
     return {}
 };
 
 export function NewTicket() {
 
-    const error = useActionData();
-    console.log(error)
+    const error = useActionData() as string;
     
     return (
         <>
@@ -35,6 +38,8 @@ export function NewTicket() {
                     Go to Home
                 </Link>
             </div>
+
+            { error && <ErrorMessage>{ error }</ErrorMessage> }
 
             <Form 
                 className="mt-10"
