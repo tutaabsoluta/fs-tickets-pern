@@ -6,10 +6,12 @@ import { addTicket } from "../services";
 // Habilitamos en el router la propiedad action, decimos que funcion se ejecutara cuando se haga submit
 export async function action({ request }: ActionFunctionArgs) {
 
+    // form data entries
     const data = Object.fromEntries(await request.formData() );
 
     let error = '';
 
+    // data validation
     if ( Object.values( data ).includes('') ) {
         error = 'All the fields are required'
     }
@@ -18,9 +20,10 @@ export async function action({ request }: ActionFunctionArgs) {
         return error
     }
 
-    // Si pasa las validaciones llamamos al servicio, nos comunicamos con la API
+    // If no errors, we call the service and comunicate with the API
     await addTicket( data );
 
+    // If the API returns success, the action redirects the user
     return redirect('/');
 };
 

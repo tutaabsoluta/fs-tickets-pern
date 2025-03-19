@@ -1,17 +1,17 @@
 import axios from "axios";
-import { DraftProductSchema } from "../types/validationSchema";
+import { DraftProductSchema, TicketSchema, TicketsSchema } from "../types/validationSchema";
 
 type TicketData = {
     [k: string]: FormDataEntryValue
 };
+
+const url = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
 export async function addTicket ( data: TicketData ) {
     try {
         const result = DraftProductSchema.safeParse(data)
 
         if ( result.success ) {
-
-            const url = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
             await axios.post(url, {
                 author: result.data.author,
@@ -29,3 +29,22 @@ export async function addTicket ( data: TicketData ) {
         console.log(error)
     }
 };
+
+
+export async function getTickets() {
+
+    try {
+
+        const { data } = await axios.get(url)
+        const result = TicketsSchema.safeParse(data)
+        
+        if ( result.success ) {
+            return result.data 
+        } else {
+            throw new Error('Error geting tickets')
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+}

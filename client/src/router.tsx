@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layouts/Layout';
-import { action as newTicketAction, Tickets, NewTicket } from './views';
+import { action as newTicketAction, Tickets, NewTicket, loader as ticketsLoader } from './views';
 
 
 
@@ -13,6 +13,7 @@ export const router = createBrowserRouter ([
             {
                 index: true,
                 element: <Tickets/>,
+                loader: ticketsLoader,
             },
 
             {
