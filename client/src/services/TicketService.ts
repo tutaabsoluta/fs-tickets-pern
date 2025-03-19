@@ -13,12 +13,12 @@ export async function addTicket ( data: TicketData ) {
 
             const url = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
-            const data = await axios.post(url, {
+            await axios.post(url, {
                 author: result.data.author,
                 text: result.data.text,
                 severity: result.data.severity,
                 createdAt: result.data.createdAt,
-            })
+            });
 
 
         } else {

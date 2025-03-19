@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, Form, Link, useActionData } from "react-router-dom";
+import { ActionFunctionArgs, Form, Link, redirect, useActionData } from "react-router-dom";
 import { ErrorMessage } from "../components";
 import { addTicket } from "../services";
 
@@ -18,9 +18,10 @@ export async function action({ request }: ActionFunctionArgs) {
         return error
     }
 
-    addTicket( data );
+    // Si pasa las validaciones llamamos al servicio, nos comunicamos con la API
+    await addTicket( data );
 
-    return {}
+    return redirect('/');
 };
 
 export function NewTicket() {
