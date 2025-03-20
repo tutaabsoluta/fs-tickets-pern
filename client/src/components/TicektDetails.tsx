@@ -37,11 +37,8 @@ export const TicektDetails = ({ ticket }: TicketDetailsProp) => {
         <td className="flex items-center gap-2 p-3 text-lg text-gray-800">
             <button 
                 className="bg-indigo-600 text-white rounded-lg w-full p-2 uppercase font-bold text-xs text-center"
-                onClick={ () => navigate(`/tickets/${ ticket.id }/edit`, {
-                    state: {
-                        ticket: ticket
-                    }
-                })}>Edit
+                onClick={ () => navigate(`/tickets/${ ticket.id }/edit`)
+                }>Edit
             </button>
             <button>Delete</button>
         </td>

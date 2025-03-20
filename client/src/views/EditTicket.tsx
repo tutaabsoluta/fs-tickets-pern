@@ -1,9 +1,24 @@
-import { ActionFunctionArgs, Form, Link, redirect, useActionData, useLocation } from "react-router-dom";
+import { ActionFunctionArgs, Form, Link, LoaderFunctionArgs, redirect, useActionData, useLoaderData } from "react-router-dom";
 import { ErrorMessage } from "../components";
-import { addTicket } from "../services";
+import { addTicket, getTicketById } from "../services";
+import { Ticket } from "../types/validationSchema";
 
 // action procesa los datos del formulario
 // Habilitamos en el router la propiedad action, decimos que funcion se ejecutara cuando se haga submit
+
+export async function loader({ params }: LoaderFunctionArgs) {
+
+    if ( params.id !== undefined ) {
+        const ticket = await getTicketById(+params.id)
+
+        if ( !ticket ) {
+
+            return redirect('/')
+            
+        }
+        return ticket
+    }
+};
 
 export async function action({ request }: ActionFunctionArgs) {
 
@@ -28,11 +43,13 @@ export async function action({ request }: ActionFunctionArgs) {
     return redirect('/');
 };
 
+
 export function EditTicket() {
 
+    const ticket = useLoaderData() as Ticket;
+
     const error = useActionData() as string;
-    const { state } = useLocation();
-    console.log(state)
+
     
     return (
         <>
@@ -66,7 +83,7 @@ export function EditTicket() {
                         id="author"
                         placeholder="Author"
                         name="author"
-                        defaultValue={ state.ticket.author }
+                        defaultValue={ ticket.author }
                     />
                 </div>
 
@@ -83,7 +100,7 @@ export function EditTicket() {
                         id="message"
                         placeholder="Text"
                         name="text"
-                        defaultValue={ state.ticket.text }
+                        defaultValue={ ticket.text }
                     />
                 </div>
 
@@ -97,7 +114,7 @@ export function EditTicket() {
                     <select
                         className="mt-2 block w-full p-3 bg-gray-50"
                         name="severity" 
-                        defaultValue={ state.ticket.severity }
+                        defaultValue={ ticket.severity }
                         id="severity">
                             
                         <option value="LOW">Low</option>
@@ -116,7 +133,7 @@ export function EditTicket() {
                     <select
                         className="mt-2 block w-full p-3 bg-gray-50" 
                         name="status"
-                        defaultValue={ state.ticket.status }
+                        defaultValue={ ticket.status }
                         id="status">
                         <option value="OPEN">Open</option>
                         <option value="IN_PROGRESS">In progress</option>
@@ -135,7 +152,7 @@ export function EditTicket() {
                         className="mt-2 block w-full p-3 bg-gray-50" 
                         type="date"
                         name="createdAt"
-                        defaultValue={ state.ticket.createdAt ? new Date(state.ticket.createdAt).toISOString().split('T')[0] : '' }
+                        defaultValue={ ticket.createdAt ? new Date(ticket.createdAt).toISOString().split('T')[0] : '' }
                         id="createdAt">
                     </input>
                 </div>

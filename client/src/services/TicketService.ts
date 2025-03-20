@@ -1,14 +1,15 @@
 import axios from "axios";
-import { DraftProductSchema, TicketSchema, TicketsSchema } from "../types/validationSchema";
+import { DraftProductSchema, TicketsSchema, Ticket, TicketSchema } from "../types/validationSchema";
 
 type TicketData = {
     [k: string]: FormDataEntryValue
 };
 
-const url = `${import.meta.env.VITE_API_URL}/api/tickets`;
 
 export async function addTicket ( data: TicketData ) {
     try {
+
+        const url = `${import.meta.env.VITE_API_URL}/api/tickets`;
         const result = DraftProductSchema.safeParse(data)
 
         if ( result.success ) {
@@ -35,6 +36,7 @@ export async function getTickets() {
 
     try {
 
+        const url = `${import.meta.env.VITE_API_URL}/api/tickets`;
         const { data } = await axios.get(url)
         const result = TicketsSchema.safeParse(data)
         
@@ -47,4 +49,23 @@ export async function getTickets() {
     } catch (error) {
         console.log(error)
     }
-}
+};
+
+export async function getTicketById( id: Ticket['id'] ) {
+
+    try {
+
+        const url = `${import.meta.env.VITE_API_URL}/api/tickets/${ id }`;
+        const { data } = await axios.get(url);
+        const result = TicketSchema.safeParse(data);
+
+        if ( result.success ) {
+            return result.data 
+        } else {
+            throw new Error(`Error geting ticket with id: ${ id }`)
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+};

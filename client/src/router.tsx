@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layouts/Layout';
-import { action as newTicketAction, Tickets, NewTicket, loader as ticketsLoader } from './views';
-import { EditTicket } from './views/EditTicket'
+import { EditTicket, loader as editTicketLoader  } from './views/EditTicket'
+import { NewTicket, action as newTicketAction } from './views/NewTicket';
+import { Tickets, loader as ticketsLoader } from './views/Tickets';
 
 
 
@@ -24,7 +25,8 @@ export const router = createBrowserRouter ([
             },
             {
                 path: 'tickets/:id/edit', // ROA Pattern - Resource-oriented design
-                element: <EditTicket/>
+                element: <EditTicket/>,
+                loader: editTicketLoader,
             },
         ],
     }
