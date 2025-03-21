@@ -1,10 +1,21 @@
+import { deleteTicket } from "../services";
 import { Ticket } from "../types/validationSchema"
-import { Link, useNavigate } from 'react-router-dom';
+import { ActionFunctionArgs, Form, redirect, useNavigate } from 'react-router-dom';
 
 type TicketDetailsProp = {
     ticket: Ticket
 };
 
+export async function action({ params }: ActionFunctionArgs) {
+
+    if ( params.id !== undefined ) {
+
+        await deleteTicket( +params.id )
+        return redirect('/')
+
+    }
+
+};
 
 
 export const TicektDetails = ({ ticket }: TicketDetailsProp) => {
@@ -14,7 +25,7 @@ export const TicektDetails = ({ ticket }: TicketDetailsProp) => {
   return (
     <tr className="border-b">
 
-        <td className="p-3 text-lg text-gray-800">
+        <td className="p-3 text-lg text-gray-00">
             { ticket.author }
         </td>
 
@@ -40,7 +51,22 @@ export const TicektDetails = ({ ticket }: TicketDetailsProp) => {
                 onClick={ () => navigate(`/tickets/${ ticket.id }/edit`)
                 }>Edit
             </button>
-            <button>Delete</button>
+            <Form
+                className="w-full"
+                method="POST"
+                action={ `tickets/${ ticket.id }/delete` }
+                onSubmit={ (e) => {
+                    if (  !confirm('Delete?') ) {
+                        e.preventDefault()
+                    }
+                } }
+            >
+                <input 
+                    type="submit"
+                    value={"Delete"}
+                    className="bg-red-600 text-white rounded-lg w-full p-2 uppercase font-bold text-xs text-center"
+                />
+            </Form>
         </td>
 
 

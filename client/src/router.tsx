@@ -3,6 +3,7 @@ import Layout from './layouts/Layout';
 import { EditTicket, loader as editTicketLoader, action as editTicketAction  } from './views/EditTicket'
 import { NewTicket, action as newTicketAction } from './views/NewTicket';
 import { Tickets, loader as ticketsLoader } from './views/Tickets';
+import { action as deleteTicketAction } from './components';
 
 
 
@@ -28,6 +29,10 @@ export const router = createBrowserRouter ([
                 element: <EditTicket/>,
                 loader: editTicketLoader,
                 action: editTicketAction,
+            }, 
+            {
+                path: 'tickets/:id/delete',
+                action: deleteTicketAction,
             },
         ],
     }

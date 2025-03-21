@@ -94,4 +94,16 @@ export async function updateProduct (data: TicketData, id: Ticket['id']) {
     } catch (error) {
         console.log(error)
     }
-}
+};
+
+export async function deleteTicket ( id: Ticket['id'] ) {
+    
+    try {
+        const url = `${import.meta.env.VITE_API_URL}/api/tickets/${ id }`;
+
+        await axios.delete(url);
+        
+    } catch (error) {
+        console.log(error)
+    }
+};

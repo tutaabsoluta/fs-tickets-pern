@@ -24,6 +24,7 @@ export function Tickets() {
                 >
                     Add Ticket
                 </Link>
+
             </div>
 
             {/* Tickets table */}
