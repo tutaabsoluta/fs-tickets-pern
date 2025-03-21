@@ -1,3 +1,4 @@
+import { Pencil, Trash2 } from "lucide-react";
 import { deleteTicket } from "../services";
 import { Ticket } from "../types/validationSchema"
 import { ActionFunctionArgs, Form, redirect, useNavigate } from 'react-router-dom';
@@ -8,9 +9,9 @@ type TicketDetailsProp = {
 
 export async function action({ params }: ActionFunctionArgs) {
 
-    if ( params.id !== undefined ) {
+    if (params.id !== undefined) {
 
-        await deleteTicket( +params.id )
+        await deleteTicket(+params.id)
         return redirect('/')
 
     }
@@ -22,54 +23,65 @@ export const TicektDetails = ({ ticket }: TicketDetailsProp) => {
 
     const navigate = useNavigate();
 
-  return (
-    <tr className="border-b">
+    return (
+        <tr className="border-t border-gray-800 hover:bg-gray-800/50 text-white">
 
-        <td className="p-3 text-lg text-gray-00">
-            { ticket.author }
-        </td>
+            <td className="px-4 py-3 text-sm font-medium">
+                {ticket.author}
+            </td>
 
-        <td className="p-3 text-lg text-gray-800">
-            { ticket.text }
-        </td>
+            <td className="max-w-xs truncate px-4 py-3 text-sm">
+                {ticket.text}
+            </td>
 
-        <td className="p-3 text-lg text-gray-800">
-            {   ticket.severity}
-        </td>
+            <td className="px-4 py-3 text-sm">
+                {ticket.severity}
+            </td>
 
-        <td className="p-3 text-lg text-gray-800">
-            { ticket.status }
-        </td>
+            <td className="px-4 py-3 text-sm">
+                {ticket.status}
+            </td>
 
-        <td className="p-3 text-lg text-gray-800">
-            { ticket.createdAt.toLocaleDateString() }
-        </td>
+            <td className="px-4 py-3 text-sm">
+                {ticket.createdAt.toLocaleDateString()}
+            </td>
 
-        <td className="flex items-center gap-2 p-3 text-lg text-gray-800">
-            <button 
-                className="bg-indigo-600 text-white rounded-lg w-full p-2 uppercase font-bold text-xs text-center"
-                onClick={ () => navigate(`/tickets/${ ticket.id }/edit`)
-                }>Edit
-            </button>
-            <Form
-                className="w-full"
-                method="POST"
-                action={ `tickets/${ ticket.id }/delete` }
-                onSubmit={ (e) => {
-                    if (  !confirm('Delete?') ) {
-                        e.preventDefault()
-                    }
-                } }
-            >
-                <input 
-                    type="submit"
-                    value={"Delete"}
-                    className="bg-red-600 text-white rounded-lg w-full p-2 uppercase font-bold text-xs text-center"
-                />
-            </Form>
-        </td>
+            <td className="px-4 py-3 text-right text-sm">
+                <div className="flex justify-end gap-2">
+                    <button
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-700 bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900"
+                        onClick={() => navigate(`/tickets/${ticket.id}/edit`)
+                        }><Pencil className="h-4 w-4 text-blue-400" />
+                        <span className="sr-only">Edit</span>
+                    </button>
+                    <div>
 
 
-    </tr>
-  )
+                        <Form
+                            className="w-full"
+                            method="POST"
+                            action={`tickets/${ticket.id}/delete`}
+                            onSubmit={(e) => {
+                                if (!confirm('Delete?')) {
+                                    e.preventDefault()
+                                }
+                            }}
+                        >
+                            <button
+                                type="submit"
+                                value={"Delete"}
+                                className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-700 bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 focus:ring-offset-gray-900"
+                            >
+                                <Trash2 className="h-4 w-4 text-red-400" />
+                                <span className="sr-only">Delete</span>
+                            </button>
+                        </Form>
+                    </div>
+                </div>
+
+            </td>
+
+
+        </tr>
+    )
 }
