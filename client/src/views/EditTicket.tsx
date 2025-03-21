@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, Form, Link, LoaderFunctionArgs, redirect, useActionData, useLoaderData } from "react-router-dom";
 import { ErrorMessage } from "../components";
-import { addTicket, getTicketById } from "../services";
+import { addTicket, getTicketById, updateProduct } from "../services";
 import { Ticket } from "../types/validationSchema";
 
 // action procesa los datos del formulario
@@ -20,7 +20,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     }
 };
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({ request, params }: ActionFunctionArgs) {
 
     // form data entries
     const data = Object.fromEntries(await request.formData() );
@@ -37,10 +37,13 @@ export async function action({ request }: ActionFunctionArgs) {
     }
 
     // If no errors, we call the service and comunicate with the API
-    await addTicket( data );
+    if (  params.id !== undefined) {
+        await updateProduct( data, +params.id );
+        
+        // If the API returns success, the action redirects the user
+        return redirect('/');
+    }
 
-    // If the API returns success, the action redirects the user
-    return redirect('/');
 };
 
 

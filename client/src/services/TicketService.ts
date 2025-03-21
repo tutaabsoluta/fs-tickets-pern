@@ -69,3 +69,29 @@ export async function getTicketById( id: Ticket['id'] ) {
         console.log(error)
     }
 };
+
+export async function updateProduct (data: TicketData, id: Ticket['id']) {
+
+    try {
+        const result = TicketSchema.safeParse({
+
+            id,
+            author: data.author,
+            text: data.text,
+            severity: data.severity,
+            status: data.status,
+            createdAt: data.createdAt
+
+        });
+
+        if ( result.success ) {
+            const url = `${import.meta.env.VITE_API_URL}/api/tickets/${ id }`;
+
+            await axios.put(url, result.data)
+
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+}
