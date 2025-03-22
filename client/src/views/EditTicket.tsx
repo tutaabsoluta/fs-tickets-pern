@@ -57,10 +57,10 @@ export function EditTicket() {
     return (
         <>
             <div className="flex justify-between">
-                <h2 className="text-4xl font-black text-slate-500">Edit Ticket</h2>
+                <h2 className="text-4xl font-black text-white">Edit Ticket</h2>
                 <Link
                     to={"/"}
-                    className="rounded-md bg-indigo-600 p-3 text-sm font-bold text-white shadow-sm hover:bg-indigo-500 transition duration-300"
+                    className="rounded-md p-3 text-sm font-bold text-white shadow-sm bg-indigo-600/10 border border-cyan-600 hover:bg-cyan-600/30 duration-300"
                 >
                     Go to Home
                 </Link>
@@ -77,7 +77,7 @@ export function EditTicket() {
 
                 <input
                     type="submit"
-                    className="mt-5 w-full bg-indigo-600 p-2 text-white font-bold text-lg cursor-pointer rounded"
+                    className="mt-5 w-full bg-indigo-600/10 border border-indigo-600 hover:bg-indigo-600/30 duration-300 p-2 text-white font-bold text-lg cursor-pointer rounded"
                     value="Save Changes"
                 />
             </Form>

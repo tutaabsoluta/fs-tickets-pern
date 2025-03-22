@@ -4,19 +4,18 @@ type TicketFormProps = {
     ticket?: Ticket
 }
 
-
 export function TicketForm({ ticket }: TicketFormProps) {
   return (
     <>
          {/* Author */}
          <div className="mb-4">
                     <label
-                        className="text-gray-800"
+                        className="block text-sm font-medium text-gray-300"
                         htmlFor="author"
                     >Author:
                     </label>
                     <input
-                        className="mt-2 block w-full p-3 bg-gray-50"
+                        className="mt-2 block w-full rounded-md border border-gray-700 bg-gray-800 p-3 text-sm text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         type="text"
                         id="author"
                         placeholder="Author"
@@ -28,12 +27,12 @@ export function TicketForm({ ticket }: TicketFormProps) {
                 {/* Text */}
                 <div className="mb-4">
                     <label
-                        className="text-gray-800"
+                        className="block text-sm font-medium text-gray-300"
                         htmlFor="message"
                     >Message:
                     </label>
                     <input
-                        className="mt-2 block w-full p-3 bg-gray-50"
+                        className="mt-2 block w-full rounded-md border border-gray-700 bg-gray-800 p-3 text-sm text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         type="text"
                         id="message"
                         placeholder="Text"
@@ -45,12 +44,12 @@ export function TicketForm({ ticket }: TicketFormProps) {
                 {/* Severity */}
                 <div className="mb-4">
                     <label
-                        className="text-gray-800"
+                        className="block text-sm font-medium text-gray-300"
                         htmlFor="severity"
                     >Severity:
                     </label>
                     <select
-                        className="mt-2 block w-full p-3 bg-gray-50"
+                        className="mt-2 block w-full rounded-md border border-gray-700 bg-gray-800 p-3 text-sm text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         name="severity" 
                         defaultValue={ ticket?.severity }
                         id="severity">
@@ -64,12 +63,12 @@ export function TicketForm({ ticket }: TicketFormProps) {
                 {/* Status */}
                 <div className="mb-4">
                     <label
-                        className="text-gray-800"
+                        className="block text-sm font-medium text-gray-300"
                         htmlFor="status"
                     >Status:
                     </label>
                     <select
-                        className="mt-2 block w-full p-3 bg-gray-50" 
+                        className="mt-2 block w-full rounded-md border border-gray-700 bg-gray-800 p-3 text-sm text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" 
                         name="status"
                         defaultValue={ ticket?.status }
                         id="status">
@@ -82,12 +81,12 @@ export function TicketForm({ ticket }: TicketFormProps) {
                 {/* Created at */}
                 <div className="mb-4">
                     <label
-                        className="text-gray-800"
+                        className="block text-sm font-medium text-gray-300"
                         htmlFor="createdAt"
                     >Created at:
                     </label>
                     <input
-                        className="mt-2 block w-full p-3 bg-gray-50" 
+                        className="mt-2 block w-full rounded-md border border-gray-700 bg-gray-800 p-3 text-sm text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" 
                         type="date"
                         name="createdAt"
                         defaultValue={ ticket?.createdAt ? new Date(ticket?.createdAt).toISOString().split('T')[0] : '' }
