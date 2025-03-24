@@ -10,27 +10,32 @@ export async function loader() {
 
     const tickets = await getTickets();
     return tickets
-}
+};
 
 
 export function Tickets() {
-
     const tickets = useLoaderData() as Ticket[];
     const [status, setStatus] = useState('');
-    const [statusDropdownOpen, setStatusDropdownOpen] = useState(false)
-    const [ searchQuery, setSearchQuery ] = useState('');
+    const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const ticketsPerPage = 5;
 
-
-
-    const filteredTickets = tickets.filter( ticket => {
+    // Filter tickets by status and message
+    const filteredTickets = tickets.filter(ticket => {
         const matchesStatus = status ? ticket.status === status : true;
-        const matchesText = searchQuery 
+        const matchesText = searchQuery
             ? ticket.text.toLowerCase().includes(searchQuery.toLowerCase())
-            : true
-        
-        return matchesStatus && matchesText
-    })
+            : true;
 
+        return matchesStatus && matchesText;
+    });
+
+    // Calculate the amount of pages and the ticket range
+    const totalPages = Math.ceil(filteredTickets.length / ticketsPerPage);
+    const startIndex = (currentPage - 1) * ticketsPerPage;
+    const endIndex = startIndex + ticketsPerPage;
+    const paginatedTickets = filteredTickets.slice(startIndex, endIndex);
 
     return (
         <>
@@ -43,10 +48,10 @@ export function Tickets() {
                         <input
                             type="text"
                             placeholder="Search tickets..."
-                            value={ searchQuery }
-                            onChange={ (e) => {
-                                setSearchQuery( e.target.value )
-                            } }
+                            value={searchQuery}
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value);
+                            }}
                             className="w-64 rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         />
                         <div className="relative">
@@ -64,39 +69,35 @@ export function Tickets() {
                                         className="block w-full px-4 py-2 text-left text-sm text-gray-100 hover:bg-gray-700"
                                         onClick={() => {
                                             setStatusDropdownOpen(false);
-                                            setStatus('')
-                                            }
-                                        }
+                                            setStatus('');
+                                        }}
                                     >
                                         All Statuses
                                     </button>
                                     <button
                                         className="block w-full px-4 py-2 text-left text-sm text-gray-100 hover:bg-gray-700"
                                         onClick={() => {
-                                            setStatus('OPEN')
+                                            setStatus('OPEN');
                                             setStatusDropdownOpen(false);
-                                            }
-                                        }
+                                        }}
                                     >
                                         Open
                                     </button>
                                     <button
                                         className="block w-full px-4 py-2 text-left text-sm text-gray-100 hover:bg-gray-700"
                                         onClick={() => {
+                                            setStatus('IN_PROGRESS');
                                             setStatusDropdownOpen(false);
-                                            setStatus('IN_PROGRESS')
-                                            }
-                                        }
+                                        }}
                                     >
                                         In Progress
                                     </button>
                                     <button
                                         className="block w-full px-4 py-2 text-left text-sm text-gray-100 hover:bg-gray-700"
                                         onClick={() => {
+                                            setStatus('CLOSED');
                                             setStatusDropdownOpen(false);
-                                            setStatus('CLOSED')
-                                            }
-                                        }
+                                        }}
                                     >
                                         Closed
                                     </button>
@@ -105,7 +106,6 @@ export function Tickets() {
                         </div>
                     </div>
                 </div>
-
 
                 <div className="overflow-hidden rounded-md border border-gray-800">
                     <table className="w-full border text-left">
@@ -121,35 +121,37 @@ export function Tickets() {
                         </thead>
 
                         <tbody>
-                            {
-                                filteredTickets.map((ticket) => (
-                                    <TicketDetails
-                                        key={ticket.id}
-                                        ticket={ticket}
-                                    />
-                                ))
-                            }
-
+                            {paginatedTickets.map((ticket) => (
+                                <TicketDetails key={ticket.id} ticket={ticket} />
+                            ))}
                         </tbody>
                     </table>
                 </div>
 
                 <div className="mt-4 flex items-center justify-between">
                     <div className="text-sm text-gray-400">
-                        Showing <span className="font-medium">{filteredTickets.length}</span> tickets
+                        Showing {Math.min(endIndex, paginatedTickets.length)} of{' '}
+                        {filteredTickets.length} tickets
                     </div>
                     <div className="flex gap-1">
-                        <button className="inline-flex items-center justify-center rounded-md border border-gray-700 bg-gray-800 px-3 py-1 text-sm font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900 cursor-pointer">
+                        <button
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                            className={`inline-flex items-center justify-center rounded-md border border-gray-700 bg-gray-800 px-3 py-1 text-sm font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900 cursor-pointer ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+                        >
                             Previous
                         </button>
-                        <button className="inline-flex items-center justify-center rounded-md border border-gray-700 bg-gray-800 px-3 py-1 text-sm font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900 cursor-pointer">
+                        <button
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                            className={`inline-flex items-center justify-center rounded-md border border-gray-700 bg-gray-800 px-3 py-1 text-sm font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900 cursor-pointer ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+                        >
                             Next
                         </button>
                     </div>
                 </div>
-
             </div>
-
         </>
-    )
-};
+    );
+}
+

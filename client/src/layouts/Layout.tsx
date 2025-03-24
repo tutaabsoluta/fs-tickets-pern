@@ -5,7 +5,7 @@ import { Link, Outlet } from "react-router-dom";
 export default function Layout() {
     return (
         <>
-            <div className="flex flex-col bg-gray-950 text-gray-100 h-screen">
+            <div className="flex flex-col bg-gray-950 text-gray-100 min-h-screen">
                 <header className="border-b border-gray-800 bg-gray-900 px-6 py-10">
                     <div className="flex items-center justify-between">
                         <h1 className="text-4xl font-extrabold text-white">

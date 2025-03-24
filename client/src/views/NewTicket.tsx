@@ -34,7 +34,7 @@ export function NewTicket() {
     return (
         <>
             <div className="flex justify-between">
-                <h2 className="text-4xl font-black text-slate-500">Add Ticket</h2>
+                <h2 className="text-4xl font-black text-white">Add Ticket</h2>
                 <Link
                     to={"/"}
                     className="rounded-md p-3 text-sm font-bold text-white shadow-sm bg-indigo-600/10 border border-cyan-600 hover:bg-cyan-600/30 duration-300"
