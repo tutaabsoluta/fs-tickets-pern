@@ -19,12 +19,12 @@ export async function action({ params }: ActionFunctionArgs) {
 };
 
 
-export const TicektDetails = ({ ticket }: TicketDetailsProp) => {
+export const TicketDetails = ({ ticket }: TicketDetailsProp) => {
 
     const navigate = useNavigate();
 
     return (
-        <tr className="border-t border-gray-800 hover:bg-gray-800/50 text-white">
+        <tr className="border-t border-gray-800 hover:bg-gray-800/50 text-white rounded-t-3xl">
 
             <td className="px-4 py-3 text-sm font-medium">
                 {ticket.author}
@@ -84,8 +84,6 @@ export const TicektDetails = ({ ticket }: TicketDetailsProp) => {
                 </div>
 
             </td>
-
-
         </tr>
     )
 }
