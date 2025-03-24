@@ -22,12 +22,12 @@ export function Tickets() {
     const ticketsPerPage = 5;
 
     // Filter tickets by status and message
-    const filteredTickets = tickets.filter(ticket => {
+    const filteredTickets = (tickets ?? []).filter(ticket => {
         const matchesStatus = status ? ticket.status === status : true;
         const matchesText = searchQuery
             ? ticket.text.toLowerCase().includes(searchQuery.toLowerCase())
             : true;
-
+    
         return matchesStatus && matchesText;
     });
 
