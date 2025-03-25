@@ -56,7 +56,7 @@ export const TicketDetails = ({ ticket }: TicketDetailsProp) => {
                         className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-700 bg-gray-800 hover:bg-gray-700 duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900"
                         onClick={() => navigate(`/tickets/${ticket.id}/edit`)
                         }><Pencil className="h-4 w-4 text-blue-400" />
-                        <span className="sr-only">Edit</span>
+                        <span className="sr-only hidden">Edit</span>
                     </button>
                     <div>
 
@@ -77,7 +77,7 @@ export const TicketDetails = ({ ticket }: TicketDetailsProp) => {
                                 className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-700 bg-gray-800 hover:bg-gray-700 duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 focus:ring-offset-gray-900"
                             >
                                 <Trash2 className="h-4 w-4 text-red-400" />
-                                <span className="sr-only">Delete</span>
+                                <span className="sr-only hidden">Delete</span>
                             </button>
                         </Form>
                     </div>
