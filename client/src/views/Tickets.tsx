@@ -36,10 +36,10 @@ export function Tickets() {
         <>
             {/* Tickets table */}
             <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mb-4 md:flex items-center justify-between">
                     <h2 className="text-xl font-semibold mb-4">Tickets</h2>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-1 md:gap-2">
                         <input
                             type="text"
                             placeholder="Search tickets..."
@@ -47,12 +47,12 @@ export function Tickets() {
                             onChange={ (e) => {
                                 setSearchQuery( e.target.value )
                             } }
-                            className="w-64 rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            className="md:w-64 rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         />
                         <div className="relative">
                             <button
                                 onClick={() => setStatusDropdownOpen(!statusDropdownOpen)}
-                                className="flex w-[180px] items-center justify-between rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="flex md:w-[180px] items-center justify-between rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-gray-100 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                             >
                                 <span>Filter by status</span>
                                 <ChevronDown className="h-4 w-4" />
@@ -107,7 +107,7 @@ export function Tickets() {
                 </div>
 
 
-                <div className="overflow-hidden rounded-md border border-gray-800">
+                <div className="overflow-x-auto md:overflow-hidden rounded-md border border-gray-800">
                     <table className="w-full border text-left">
                         <thead className="bg-gray-800">
                             <tr>
