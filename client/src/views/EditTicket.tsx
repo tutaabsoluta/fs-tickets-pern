@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, Form, Link, LoaderFunctionArgs, redirect, useActionData, useLoaderData } from "react-router-dom";
 import { ErrorMessage, TicketForm } from "../components";
-import { addTicket, getTicketById, updateProduct } from "../services";
+import { getTicketById, updateProduct } from "../services";
 import { Ticket } from "../types/validationSchema";
 
 // action procesa los datos del formulario
