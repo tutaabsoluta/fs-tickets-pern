@@ -5,11 +5,8 @@ import { Ticket } from "../types/validationSchema";
 import { ChevronDown } from 'lucide-react'
 import { useState } from "react";
 
-
 export async function loader() {
-
-    const tickets = await getTickets();
-    return tickets
+    return getTickets()
 };
 
 
